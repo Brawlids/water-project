@@ -1,0 +1,289 @@
+/* ==========================================================================
+   Responsive Architecture - Breakpoints & Native iOS Mobile Experience
+   ========================================================================== */
+
+/* Laptop (1024px – 1439px) */
+@media (max-width: 1439px) {
+  .hero-title {
+    font-size: 52px;
+  }
+  
+  .section-title {
+    font-size: 34px;
+  }
+
+  .hero-stage {
+    height: 440px;
+  }
+
+  .badge-top-right {
+    right: 0px;
+    top: 20px;
+  }
+
+  .badge-bottom-left {
+    left: 0px;
+    bottom: 30px;
+  }
+}
+
+/* Tablet (768px – 1023px) */
+@media (max-width: 1023px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .hero-badge-tag {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .hero-trust-check {
+    justify-content: center;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-card:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .calc-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-badge-card {
+    max-width: 100%;
+  }
+
+  .nav-menu {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 13.5px;
+  }
+}
+
+/* Mobile (320px – 767px) */
+@media (max-width: 767px) {
+  :root {
+    --nav-height: 60px;
+  }
+
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  /* Header & Mobile Nav */
+  .header-wrapper {
+    top: 12px;
+    padding: 0 16px;
+  }
+
+  .nav-pill-container {
+    height: 54px;
+    padding: 6px 10px 6px 14px;
+  }
+
+  .nav-menu {
+    display: none;
+  }
+
+  .nav-cta-btn {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding-top: 105px;
+    padding-bottom: 40px;
+    min-height: auto;
+  }
+
+  .hero-title {
+    font-size: 36px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  .btn-text-link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-stage {
+    height: 340px;
+    margin-top: 10px;
+  }
+
+  .hero-floating-badge {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .badge-icon-box {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .badge-stat {
+    font-size: 18px;
+  }
+
+  .badge-top-right {
+    top: 10px;
+    right: 0;
+    transform: scale(0.9);
+  }
+
+  .badge-bottom-left {
+    bottom: 10px;
+    left: 0;
+    transform: scale(0.9);
+  }
+
+  /* Section Header */
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .section-subtitle {
+    font-size: 15px;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 24px 20px;
+  }
+
+  .stat-card:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .stat-card-number {
+    font-size: 36px;
+  }
+
+  /* Habits Grid */
+  .habits-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .habit-card {
+    padding: 24px 20px;
+  }
+
+  .habit-title {
+    font-size: 19px;
+  }
+
+  .habit-desc {
+    font-size: 14.5px;
+  }
+
+  /* Calculator */
+  .calc-card {
+    padding: 24px 20px;
+  }
+
+  .calc-stats-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .chart-bars-track {
+    height: 110px;
+  }
+
+  .chart-bar-fill {
+    width: 16px;
+  }
+
+  /* About */
+  .about-quote {
+    font-size: 19px;
+  }
+
+  .about-feature-item {
+    padding: 18px 20px;
+  }
+
+  .about-feature-label {
+    font-size: 15px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 32px 0 calc(32px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .footer-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

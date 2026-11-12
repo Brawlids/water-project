@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Apple iOS 26 Liquid Glass & Refraction Material System
+   ========================================================================== */
+
+/* Liquid Glass Card Base */
+.liquid-glass-card {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 16px 36px -10px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.75) inset,
+    0 1px 3px rgba(255, 255, 255, 0.9) inset;
+  transition: 
+    background 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+/* Moving Specular Reflection Sheen */
+.liquid-glass-card::before,
+.hero-floating-badge::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 25%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.4s ease, transform 0.6s ease;
+  animation: specularShimmer 12s ease-in-out infinite alternate;
+}
+
+.liquid-glass-card:hover::before {
+  opacity: 1;
+  transform: rotate(25deg) translateY(-8%);
+}
+
+/* Dynamic Frosted State (Applied during active scrolling) */
+body.is-scrolling .liquid-glass-card,
+body.is-scrolling .nav-pill-container,
+body.is-scrolling .hero-floating-badge,
+body.is-scrolling .stat-card,
+body.is-scrolling .habit-card,
+body.is-scrolling .calc-card,
+body.is-scrolling .about-feature-item {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(36px) saturate(140%);
+  -webkit-backdrop-filter: blur(36px) saturate(140%);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 
+    0 20px 42px -12px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.95) inset;
+}
+
+/* Subtle Breathing Animation for idle Liquid Glass surfaces */
+@keyframes glassBreathe {
+  0% {
+    box-shadow: 
+      0 16px 36px -10px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.75) inset,
+      0 0 20px rgba(56, 189, 248, 0.04);
+  }
+  50% {
+    box-shadow: 
+      0 20px 40px -10px rgba(15, 23, 42, 0.1),
+      0 0 0 1.5px rgba(255, 255, 255, 0.9) inset,
+      0 0 28px rgba(56, 189, 248, 0.12);
+  }
+  100% {
+    box-shadow: 
+      0 16px 36px -10px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.75) inset,
+      0 0 20px rgba(56, 189, 248, 0.04);
+  }
+}
+
+.stat-card, .calc-card, .habit-card {
+  animation: glassBreathe 8s ease-in-out infinite;
+}
+
+/* Stagger breathing animations so they never sync */
+.stat-card:nth-child(1) { animation-delay: 0s; }
+.stat-card:nth-child(2) { animation-delay: 2.5s; }
+.stat-card:nth-child(3) { animation-delay: 5s; }
+
+.habit-card:nth-child(1) { animation-delay: 0.5s; }
+.habit-card:nth-child(2) { animation-delay: 2.2s; }
+.habit-card:nth-child(3) { animation-delay: 4.1s; }
+.habit-card:nth-child(4) { animation-delay: 6s; }
+
+/* Pointer Responsive Refraction Tracking */
+.glass-tilt-surface {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}

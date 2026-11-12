@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Крапля до краплі — збережемо воду разом!</title>
+  <meta name="description" content="Шкільний екологічний проєкт про збереження прісної води та відповідальне споживання водних ресурсів.">
+  <meta name="theme-color" content="#F0F8FF">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  
+  <!-- Apple Touch & Mobile Meta -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Крапля до краплі">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/glass.css">
+  <link rel="stylesheet" href="/src/styles/animations.css">
+  <link rel="stylesheet" href="/src/styles/responsive.css">
+</head>
+<body>
+
+  <!-- ========================================================================
+       Cinematic Intro 1: MS-DOS Terminal Sequence
+       ======================================================================== -->
+  <div id="dos-intro" aria-live="polite">
+    <div class="dos-header">
+      <div class="dos-title">MS-DOS WATER OS v6.22 [PROJECT_AQUA_2026]</div>
+      <button id="dos-skip-btn" class="dos-skip-btn" title="Пропустити заставку">[ESC] ПРОПУСТИТИ &gt;&gt;</button>
+    </div>
+    <div id="dos-terminal-content" class="dos-terminal-content"></div>
+    <span class="dos-cursor"></span>
+  </div>
+
+  <!-- ========================================================================
+       Cinematic Intro 2: Premium 2D Water Droplet Transition (Motion Canvas)
+       ======================================================================== -->
+  <div id="droplet-transition-overlay">
+    <canvas id="droplet-transition-canvas"></canvas>
+  </div>
+
+  <!-- ========================================================================
+       Background Ambient Lighting & Caustics (Dynamic Velocity Blur targets)
+       ======================================================================== -->
+  <div class="ambient-scene" aria-hidden="true">
+    <div class="ambient-orb ambient-orb-1 motion-blur-target"></div>
+    <div class="ambient-orb ambient-orb-2 motion-blur-target"></div>
+    <div class="ambient-orb ambient-orb-3 motion-blur-target"></div>
+    <div class="ambient-caustic-layer motion-blur-target"></div>
+  </div>
+
+  <!-- ========================================================================
+       Header & Floating Navigation Pill
+       ======================================================================== -->
+  <header class="header-wrapper" id="main-header">
+    <nav class="nav-pill-container" aria-label="Головна навігація">
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="Крапля до краплі - На головну">
+        <div class="nav-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+          </svg>
+        </div>
+        <span>Крапля до краплі</span>
+      </a>
+
+      <!-- Center Links -->
+      <ul class="nav-menu">
+        <li><a href="#hero" class="nav-link active">Головна</a></li>
+        <li><a href="#facts" class="nav-link">Факти</a></li>
+        <li><a href="#habits" class="nav-link">Поради</a></li>
+        <li><a href="#about" class="nav-link">Про проєкт</a></li>
+      </ul>
+
+      <!-- Right Action CTA Button -->
+      <a href="#calc" class="nav-cta-btn">
+        <span>Моя економія</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+
+      <!-- Mobile Hamburger Toggle -->
+      <button class="mobile-menu-toggle" id="mobile-toggle-btn" aria-label="Відкрити меню">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-sheet">
+      <div class="mobile-drawer-header">
+        <div class="nav-logo">
+          <div class="nav-logo-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <span>Крапля до краплі</span>
+        </div>
+        <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Закрити меню">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <ul class="mobile-drawer-links">
+        <li><a href="#hero" class="mobile-drawer-link active">Головна</a></li>
+        <li><a href="#facts" class="mobile-drawer-link">Факти</a></li>
+        <li><a href="#habits" class="mobile-drawer-link">Поради</a></li>
+        <li><a href="#calc" class="mobile-drawer-link">Калькулятор економії</a></li>
+        <li><a href="#about" class="mobile-drawer-link">Про проєкт</a></li>
+      </ul>
+      <a href="#calc" class="btn-primary" style="margin-top: auto; justify-content: center;">
+        <span>Розрахувати внесок</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ======================================================================
+         Section 1: Hero Section
+         ====================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Left Column Content -->
+          <div class="hero-content">
+            <div class="hero-badge-tag">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+              </svg>
+              <span>МАЛЕНЬКІ ДІЇ, ВЕЛИКІ ЗМІНИ.</span>
+            </div>
+
+            <h1 class="hero-title">
+              Кожна крапля<br>
+              <span class="gradient-text">має значення</span>
+            </h1>
+
+            <p class="hero-subtitle">
+              Збережімо воду сьогодні заради майбутнього.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#calc" class="btn-primary">
+                <span>Почати з себе</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#facts" class="btn-text-link">
+                <span>Дізнатися більше</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </a>
+            </div>
+
+            <div class="hero-trust-check">
+              <div class="hero-trust-check-icon">✓</div>
+              <span>Корисно для планети. Просто для тебе.</span>
+            </div>
+
+            <div class="hero-micro-caption">
+              КРАПЛЯ ДО КРАПЛІ — ЗБЕРЕЖЕМО ВОДУ РАЗОМ!
+            </div>
+          </div>
+
+          <!-- Right Column: 3D Water Droplet Simulation & Floating Widgets -->
+          <div class="hero-stage">
+            <!-- Three.js Canvas for interactive undulating droplet and ripples -->
+            <canvas id="hero-water-canvas"></canvas>
+
+            <!-- Floating Badge 1 (Top Right) -->
+            <div class="hero-floating-badge badge-top-right">
+              <div class="badge-icon-box badge-icon-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <div class="badge-content">
+                <span class="badge-label">Мій внесок сьогодні</span>
+                <span class="badge-stat">−24 л води</span>
+              </div>
+            </div>
+
+            <!-- Floating Badge 2 (Bottom Left) -->
+            <div class="hero-floating-badge badge-bottom-left">
+              <div class="badge-icon-box badge-icon-green">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+                </svg>
+              </div>
+              <div class="badge-content">
+                <span class="badge-stat-title">Звичка на краще</span>
+                <span class="badge-sub">Почни з однієї краплі</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <a href="#facts" class="hero-scroll-indicator" aria-label="Гортати далі">
+          <span>Гортай до маленьких змін</span>
+          <svg class="scroll-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section 2: Stats ("ВОДА У ЦИФРАХ")
+         ====================================================================== -->
+    <section class="section" id="facts">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            <span>ВОДА У ЦИФРАХ</span>
+          </div>
+          <h2 class="section-title">Невеликі дії. Відчутна різниця.</h2>
+          <p class="section-subtitle">Поглянь, скільки може змінити одна звичка.</p>
+        </div>
+
+        <div class="stats-grid">
+          <!-- Stat Card 1: 2.5% -->
+          <div class="stat-card liquid-glass-card">
+            <div class="stat-card-top">
+              <div class="stat-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
+              <svg class="stat-gauge-svg" viewBox="0 0 40 40">
+                <circle class="stat-gauge-track" cx="20" cy="20" r="16"></circle>
+                <circle class="stat-gauge-fill" data-progress="0.08" cx="20" cy="20" r="16" stroke-dasharray="100.5" stroke-dashoffset="100.5"></circle>
+              </svg>
+            </div>
+            <div class="stat-card-title">Цінність води</div>
+            <div class="stat-card-number" data-target="2.5">2,5%</div>
+            <div class="stat-card-desc">води на Землі — прісна</div>
+            <div class="stat-card-note">Ресурс, який варто берегти.</div>
+          </div>
+
+          <!-- Stat Card 2: 30 л -->
+          <div class="stat-card liquid-glass-card">
+            <div class="stat-card-top">
+              <div class="stat-card-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <svg class="stat-gauge-svg" viewBox="0 0 40 40">
+                <circle class="stat-gauge-track" cx="20" cy="20" r="16"></circle>
+                <circle class="stat-gauge-fill" data-progress="0.55" cx="20" cy="20" r="16" stroke-dasharray="100.5" stroke-dashoffset="100.5"></circle>
+              </svg>
+            </div>
+            <div class="stat-card-title">Твоя щоденна звичка</div>
+            <div class="stat-card-number" data-target="30">до 30 л</div>
+            <div class="stat-card-desc">можна зберегти за день</div>
+            <div class="stat-card-note">Закриваючи кран під час чищення зубів.</div>
+          </div>
+
+          <!-- Stat Card 3: -30% -->
+          <div class="stat-card green liquid-glass-card">
+            <div class="stat-card-top">
+              <div class="stat-card-icon green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+                </svg>
+              </div>
+              <svg class="stat-gauge-svg" viewBox="0 0 40 40">
+                <circle class="stat-gauge-track" cx="20" cy="20" r="16"></circle>
+                <circle class="stat-gauge-fill" data-progress="0.30" cx="20" cy="20" r="16" stroke-dasharray="100.5" stroke-dashoffset="100.5"></circle>
+              </svg>
+            </div>
+            <div class="stat-card-title">Розумний вибір</div>
+            <div class="stat-card-number green" data-target="-30">-30%</div>
+            <div class="stat-card-desc">менше води з аератором</div>
+            <div class="stat-card-note">Порівняно зі звичайним краном.</div>
+          </div>
+        </div>
+
+        <div class="stats-footnote">
+          Джерела: USGS · EPA WaterSense. Значення округлено.
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section 3: Habits ("ТВОЇ КОРИСНІ ЗВИЧКИ")
+         ====================================================================== -->
+    <section class="section" id="habits">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+            </svg>
+            <span>ТВОЇ КОРИСНІ ЗВИЧКИ</span>
+          </div>
+          <h2 class="section-title">Турбота починається з тебе.</h2>
+        </div>
+
+        <div class="habits-grid">
+          <!-- Habit 01 -->
+          <div class="habit-card liquid-glass-card" data-preset="tap">
+            <div class="habit-card-header">
+              <div class="habit-icon-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12h2a2 2 0 0 0 2-2V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h4"></path>
+                  <path d="M12 2v4"></path>
+                  <path d="M12 16a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"></path>
+                </svg>
+              </div>
+              <span class="habit-number">01</span>
+            </div>
+            <h3 class="habit-title">Закривай кран</h3>
+            <p class="habit-desc">Поки чистиш зуби чи намилюєш руки, воді теж потрібна пауза.</p>
+            <span class="habit-action-link">
+              <span>Почни вже сьогодні</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Habit 02 -->
+          <div class="habit-card liquid-glass-card" data-preset="leak">
+            <div class="habit-card-header">
+              <div class="habit-icon-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+              </div>
+              <span class="habit-number">02</span>
+            </div>
+            <h3 class="habit-title">Усувай протікання</h3>
+            <p class="habit-desc">Помітив краплі? Розкажи дорослим. Навіть маленький витік має значення.</p>
+            <span class="habit-action-link">
+              <span>Перевір крани вдома</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Habit 03 -->
+          <div class="habit-card liquid-glass-card" data-preset="shower">
+            <div class="habit-card-header">
+              <div class="habit-icon-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4v7a4 4 0 0 0 4 4h9"></path>
+                  <path d="M14 9l3-3 3 3"></path>
+                  <path d="M18 19v2"></path>
+                  <path d="M14 19v2"></path>
+                  <path d="M22 19v2"></path>
+                </svg>
+              </div>
+              <span class="habit-number">03</span>
+            </div>
+            <h3 class="habit-title">Використовуй менше</h3>
+            <p class="habit-desc">Коротший душ замість ванни. Повна пляшка замість відкритого крана.</p>
+            <span class="habit-action-link">
+              <span>Кожен літр важливий</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+
+          <!-- Habit 04 -->
+          <div class="habit-card liquid-glass-card" data-preset="eco">
+            <div class="habit-card-header">
+              <div class="habit-icon-pill">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                  <circle cx="12" cy="13" r="5"></circle>
+                  <path d="M12 10a3 3 0 0 1 3 3"></path>
+                </svg>
+              </div>
+              <span class="habit-number">04</span>
+            </div>
+            <h3 class="habit-title">Обирай екорежим</h3>
+            <p class="habit-desc">Запускай пральну й посудомийну машину тільки тоді, коли вони повними. Увімкни Есо.</p>
+            <span class="habit-action-link">
+              <span>Розумна турбота</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section 4: Calculator ("ТВІЙ ОСОБИСТИЙ ВНЕСОК")
+         ====================================================================== -->
+    <section class="section" id="calc">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            <span>ТВІЙ ОСОБИСТИЙ ВНЕСОК</span>
+          </div>
+          <h2 class="section-title">Порахуй свої краплі добра.</h2>
+          <p class="section-subtitle">Зміни одну звичку — побач, скільки води залишиться планеті.</p>
+        </div>
+
+        <div class="calc-wrapper">
+          <!-- Left Column: Settings & Stepper -->
+          <div class="calc-card liquid-glass-card">
+            <h3 class="calc-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              <span>Моя корисна звичка</span>
+            </h3>
+
+            <!-- Habit Dropdown -->
+            <div class="calc-control-group">
+              <label for="habit-select" class="calc-label">Оберіть дію:</label>
+              <div class="calc-select-wrapper">
+                <select id="habit-select" class="calc-select">
+                  <option value="tap" selected>Закриваю кран під час чищення зубів</option>
+                  <option value="shower">Коротший душ (5 хв замість 10 хв)</option>
+                  <option value="leak">Усунення крапельного протікання крана</option>
+                  <option value="aerator">Використання аератора на крані</option>
+                </select>
+                <div class="calc-select-arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <!-- Minutes Stepper -->
+            <div class="calc-control-group">
+              <label id="time-input-label" class="calc-label">Скільки хвилин на день?</label>
+              <div class="stepper-container">
+                <button type="button" class="stepper-btn" id="btn-time-minus" aria-label="Зменшити час">−</button>
+                <span class="stepper-value" id="val-time-display">4 хв</span>
+                <button type="button" class="stepper-btn" id="btn-time-plus" aria-label="Збільшити час">+</button>
+              </div>
+            </div>
+
+            <!-- Meta Details -->
+            <div class="calc-meta-row">
+              <span class="calc-meta-label">Витрата води</span>
+              <span class="calc-meta-val" id="calc-flow-rate">6 л / хв</span>
+            </div>
+
+            <div class="calc-meta-row">
+              <span class="calc-meta-label">Людей у розрахунку</span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" class="stepper-btn" id="btn-people-minus" style="width: 28px; height: 28px; font-size: 14px;" aria-label="Зменшити кількість людей">−</button>
+                <span class="calc-meta-val" id="val-people-display" style="min-width: 18px; text-align: center;">1</span>
+                <button type="button" class="stepper-btn" id="btn-people-plus" style="width: 28px; height: 28px; font-size: 14px;" aria-label="Збільшити кількість людей">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Results & Interactive Accumulation Chart -->
+          <div class="calc-card liquid-glass-card">
+            <h3 class="calc-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+              </svg>
+              <span>Збережена вода</span>
+            </h3>
+
+            <!-- Segmented Control Tabs -->
+            <div class="calc-tabs-bar" role="tablist">
+              <button class="calc-tab-btn" data-tab="day" role="tab" aria-selected="false">День</button>
+              <button class="calc-tab-btn active" data-tab="week" role="tab" aria-selected="true">Тиждень</button>
+              <button class="calc-tab-btn" data-tab="month" role="tab" aria-selected="false">Місяць</button>
+            </div>
+
+            <!-- Stats Triple Summary -->
+            <div class="calc-stats-row">
+              <div class="calc-stat-block" id="block-day">
+                <span class="calc-stat-period">За день</span>
+                <span class="calc-stat-liters" id="res-liters-day">24 л</span>
+              </div>
+              <div class="calc-stat-block active-tab-highlight" id="block-week">
+                <span class="calc-stat-period">За тиждень</span>
+                <span class="calc-stat-liters" id="res-liters-week">168 л</span>
+              </div>
+              <div class="calc-stat-block" id="block-month">
+                <span class="calc-stat-period">За місяць</span>
+                <span class="calc-stat-liters" id="res-liters-month">720 л</span>
+              </div>
+            </div>
+
+            <!-- Weekly Accumulation Bar Chart -->
+            <div class="chart-container">
+              <div class="chart-header">Накопичена економія за тиждень</div>
+              <div class="chart-bars-track" id="chart-bars-track">
+                <!-- Bars dynamically rendered / animated via JS -->
+                <div class="chart-bar-item" data-day="0">
+                  <div class="chart-bar-fill" style="height: 14%;"></div>
+                  <span class="chart-bar-day">Пн</span>
+                </div>
+                <div class="chart-bar-item" data-day="1">
+                  <div class="chart-bar-fill" style="height: 28%;"></div>
+                  <span class="chart-bar-day">Вт</span>
+                </div>
+                <div class="chart-bar-item" data-day="2">
+                  <div class="chart-bar-fill" style="height: 42%;"></div>
+                  <span class="chart-bar-day">Ср</span>
+                </div>
+                <div class="chart-bar-item" data-day="3">
+                  <div class="chart-bar-fill" style="height: 56%;"></div>
+                  <span class="chart-bar-day">Чт</span>
+                </div>
+                <div class="chart-bar-item" data-day="4">
+                  <div class="chart-bar-fill" style="height: 70%;"></div>
+                  <span class="chart-bar-day">Пт</span>
+                </div>
+                <div class="chart-bar-item" data-day="5">
+                  <div class="chart-bar-fill" style="height: 84%;"></div>
+                  <span class="chart-bar-day">Сб</span>
+                </div>
+                <div class="chart-bar-item" data-day="6">
+                  <div class="chart-bar-badge" id="chart-peak-badge">168 л</div>
+                  <div class="chart-bar-fill active" style="height: 98%;"></div>
+                  <span class="chart-bar-day">Нд</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="calc-formula-note">
+          Приклад розрахунку: 6 л/хв × 4 хв = 24 л на день · 7 днів у тижні · 30 днів у місяці. Фактична економія може відрізнятися.
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         Section 5: About ("ПРО НАШ ПРОЄКТ")
+         ====================================================================== -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            <span>ПРО НАШ ПРОЄКТ</span>
+          </div>
+          <h2 class="section-title">Разом — більше, ніж просто краплі.</h2>
+        </div>
+
+        <div class="about-grid">
+          <!-- Left Column: Quote & Trust Badge -->
+          <div class="about-intro-box">
+            <blockquote class="about-quote">
+              «Крапля до краплі — збережемо воду разом!» — шкільна екологічна ініціатива про щоденну турботу, що змінює майбутнє.
+            </blockquote>
+
+            <div class="about-badge-card float-independent-3">
+              <div class="about-badge-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="about-badge-title">Маленька звичка. Велика турбота.</div>
+                <div class="about-badge-subtitle">Створено з любов'ю до планети</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: 3 Feature Cards -->
+          <div class="about-features-list">
+            <!-- Feature 1 -->
+            <div class="about-feature-item liquid-glass-card">
+              <div class="about-feature-left">
+                <div class="about-feature-icon green">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="about-feature-label">Наша мета</div>
+                  <div class="about-feature-desc">Навчитися берегти воду щодня.</div>
+                </div>
+              </div>
+              <span class="about-feature-arrow">&gt;</span>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="about-feature-item liquid-glass-card">
+              <div class="about-feature-left">
+                <div class="about-feature-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="about-feature-label">Для кого</div>
+                  <div class="about-feature-desc">Для учнів, родин і кожного з нас.</div>
+                </div>
+              </div>
+              <span class="about-feature-arrow">&gt;</span>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="about-feature-item liquid-glass-card">
+              <div class="about-feature-left">
+                <div class="about-feature-icon heart">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="about-feature-label">Як долучитися</div>
+                  <div class="about-feature-desc">Обери звичку. Поділися з друзями.</div>
+                </div>
+              </div>
+              <span class="about-feature-arrow">&gt;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       Footer
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="nav-logo-icon" style="width: 30px; height: 30px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+          </div>
+          <span>Крапля до краплі</span>
+        </div>
+
+        <!-- Center Motto -->
+        <div class="footer-motto">
+          «Збережемо воду разом!»
+        </div>
+
+        <!-- Meta info & Replay Intro Button -->
+        <div class="footer-meta">
+          <span class="footer-tag">
+            <span>Шкільний екопроєкт - 2026</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="#10B981">
+              <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5c0 2 1.5 3.5 3 3.5"/>
+            </svg>
+          </span>
+
+          <button id="btn-replay-intro" class="btn-replay-intro" title="Переглянути вступне 3D-інтро знову">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            <span>Інтро</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Modules -->
+  <script type="module" src="/src/scripts/main.js"></script>
+</body>
+</html>
