@@ -111,6 +111,35 @@ npm run preview
 
 ---
 
+## ⚡ Розгортання на Vercel
+
+Проєкт повністю налаштовано для роботи на Vercel завдяки файлу [vercel.json](file:///c:/Users/PC/Downloads/water-project/vercel.json) та оптимізованій конфігурації Vite.
+
+### Варіант 1: Розгортання в 1 клік через Vercel Dashboard
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBrawlids%2Fwater-project)
+
+1. Перейдіть на [Vercel](https://vercel.com) та увійдіть через свій GitHub-акаунт.
+2. Натисніть **«Add New...» → «Project»**.
+3. У списку репозиторіїв оберіть **`Brawlids/water-project`** та натисніть **«Import»**.
+4. Усі налаштування визначаться автоматично:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+5. Натисніть **«Deploy»**. За 30 секунд ваш сайт буде опубліковано у глобальній CDN мережі Vercel з безкоштовним SSL-сертифікатом.
+
+### Варіант 2: Розгортання через термінал (Vercel CLI)
+
+```bash
+npx vercel
+```
+Дотримуйтесь підказок у терміналі (погодьтесь із дефолтними параметрами). Для оновлення продакшн-версії:
+```bash
+npx vercel --prod
+```
+
+---
+
 ## 📁 Структура проєкту
 
 ```
